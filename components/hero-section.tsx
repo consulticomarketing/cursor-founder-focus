@@ -52,7 +52,7 @@ export function HeroSection() {
 
   return (
     <section className="pt-32 pb-12 px-6 min-h-screen flex items-center relative overflow-hidden bg-zinc-950">
-      {/* Atmospheric background */}
+      {/* Background image + atmospheric overlay */}
       <div className="absolute inset-0 top-0">
         <div
           className="w-full will-change-transform overflow-hidden"
@@ -62,7 +62,13 @@ export function HeroSection() {
             height: `${heightVh}vh`,
           }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-zinc-800 via-zinc-900 to-stone-950" />
+          {/* Hero background image */}
+          <div
+            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url(/hero-bg.png)" }}
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/85 via-zinc-950/80 to-stone-950/90" />
           {/* Grain overlay */}
           <div
             className="absolute inset-0 opacity-30"
@@ -109,7 +115,7 @@ export function HeroSection() {
             className={`transition-all duration-1000 delay-[800ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           >
             <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/60">
-              A small-group retreat in a large Scottish house — seven days of content creation, dedicated sales time,
+              A five-night retreat in a large Scottish house — content creation, dedicated sales time,
               and real founder community. Leave with your VSL, podcast, social media, and ads done.
             </p>
 

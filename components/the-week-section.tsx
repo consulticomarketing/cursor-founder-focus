@@ -107,7 +107,7 @@ export function TheWeekSection() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Day by day</p>
           <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">What happens during the week</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Seven days structured around content creation, deep work, and founder community. Every day has a purpose.
+            Five nights, structured around content creation, deep work, and founder community. Every day has a purpose.
           </p>
         </motion.div>
       </div>

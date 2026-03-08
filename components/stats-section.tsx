@@ -29,20 +29,20 @@ function useCountUp(end: number, duration = 2000, suffix = "") {
 export function StatsSection() {
   const [isVisible, setIsVisible] = useState(false)
 
-  const days = useCountUp(7, 1500, "")
-  const founders = useCountUp(8, 1500, "")
+  const nights = useCountUp(5, 1500, "")
+  const founders = useCountUp(21, 1500, "")
   const pieces = useCountUp(4, 1500, "")
-  const weeks = useCountUp(1, 800, "")
+  const retreats = useCountUp(1, 800, "")
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !isVisible) {
           setIsVisible(true)
-          days.start()
+          nights.start()
           founders.start()
           pieces.start()
-          weeks.start()
+          retreats.start()
         }
       },
       { threshold: 0.3 },
@@ -53,10 +53,10 @@ export function StatsSection() {
   }, [isVisible])
 
   const stats = [
-    { stat: days, label: "Days immersed" },
-    { stat: founders, label: "Founders per cohort" },
+    { stat: nights, label: "Nights at the retreat" },
+    { stat: founders, label: "Founders per cohort (max)" },
     { stat: pieces, label: "Content types produced" },
-    { stat: weeks, label: "Week. Fully focused." },
+    { stat: retreats, label: "Retreat. Fully focused." },
   ]
 
   return (

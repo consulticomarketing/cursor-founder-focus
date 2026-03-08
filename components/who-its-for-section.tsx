@@ -12,9 +12,9 @@ const forYou = [
 ]
 
 const notForYou = [
-  "You're looking for a passive retreat — this week is high output.",
+  "You're looking for a passive retreat — this one is high output.",
   "You're pre-revenue and not yet ready to invest in content at scale.",
-  "You can't commit to the full week.",
+  "You can't commit to the full five nights.",
 ]
 
 export function WhoItsForSection() {
@@ -101,7 +101,7 @@ export function WhoItsForSection() {
             href="#waitlist"
             className="relative inline-flex items-center justify-center gap-0 bg-foreground text-background rounded-full pl-6 pr-1.5 py-1.5 transition-all duration-300 group overflow-hidden"
           >
-            <span className="text-sm pr-4 font-medium">Apply for a Spot</span>
+            <span className="text-sm pr-4 font-medium">Join the Waitlist</span>
             <span className="w-10 h-10 bg-background rounded-full flex items-center justify-center">
               <Check className="w-4 h-4 text-foreground" />
             </span>

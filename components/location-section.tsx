@@ -28,7 +28,7 @@ export function LocationSection() {
           {[
             {
               title: "Private estate",
-              description: "The whole property is yours for the week. No other guests. No interruptions.",
+              description: "The whole property is yours for the retreat. No other guests. No interruptions.",
               emoji: "🏡",
             },
             {

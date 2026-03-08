@@ -1,22 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Founder Focus Events
 
-## Getting Started
+Next.js landing site for Founder Focus events (waitlist, about, schedule, FAQ, etc.).
 
-First, run the development server:
+## Local development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Prerequisites:** Node.js 18+ and npm.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Run the dev server**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open in the browser**  
+   [http://localhost:3000](http://localhost:3000) — the page hot-reloads as you edit.
+
+**Key files to edit:**
+- `app/page.tsx` — home page layout (sections order)
+- `components/*.tsx` — hero, stats, about, schedule, CTA, location, testimonials, FAQ, waitlist, footer
+- `app/api/waitlist/route.ts` — waitlist signup (currently logs to console; swap for Resend/Mailchimp/Tally later)
+
+No `.env` required for local run. Waitlist API is a placeholder and works without config.
+
+## Deploy to Vercel (share the live site)
+
+**Option A — One-time deploy (CLI)**  
+1. Install Vercel CLI and log in (one time): `npm i -g vercel` then `vercel login`  
+2. From the project root: `vercel --prod` (or `npm run deploy` after `npm i -g vercel`)  
+3. You’ll get a URL like `https://founder-focus-events-xxx.vercel.app` to share.
+
+**Option B — GitHub + Vercel (recommended)**  
+1. Push this repo to GitHub.  
+2. Go to [vercel.com](https://vercel.com) → **Add New** → **Project** → Import your repo.  
+3. Leave defaults (framework: Next.js, build: `next build`, output: default).  
+4. Click **Deploy**. Every push to `main` will auto-deploy.
+
+The project already has `vercel.json` with `"framework": "nextjs"` so Vercel will detect it.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

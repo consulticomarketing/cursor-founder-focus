@@ -19,12 +19,12 @@ const faqs = [
   {
     question: "What does the week cost?",
     answer:
-      "Pricing will be confirmed when the first event is announced. It will reflect the cost of seven days accommodation, professional production, catering, and facilitation. Join the waitlist for early access pricing.",
+      "Pricing will be confirmed when the first event is announced. It will reflect the cost of five nights accommodation, professional production, catering, and facilitation. Join the waitlist for early access pricing.",
   },
   {
     question: "How many founders will be there?",
     answer:
-      "We're keeping cohorts small — maximum 8 founders per event. Small enough that everyone gets proper support and production time, large enough to have genuine peer energy.",
+      "We're keeping cohorts focused — maximum 21 founders per retreat. Enough for genuine peer energy and collaboration, with proper support and production time for everyone.",
   },
   {
     question: "Do I need to prepare anything?",
@@ -32,9 +32,9 @@ const faqs = [
       "We'll send a prep guide to everyone before the week. Expect to have a rough VSL script outline, a sense of your content goals, and any existing brand assets ready. We'll support you in preparation.",
   },
   {
-    question: "What is Founder Focus Events' connection to Consultico?",
+    question: "What is Founder Focus Events' connection to Wilson Vincent Events?",
     answer:
-      "Founder Focus Events is an initiative by Consultico, a Glasgow-based marketing consultancy. Consultico's expertise in content strategy and founder marketing is the foundation for the event's programme.",
+      "Founder Focus Events is an initiative by Wilson Vincent Events. Their focus on curated rooms for founders, operators and decision-makers — and building systems for serious growth — is the foundation for this retreat's programme.",
   },
 ]
 
@@ -43,9 +43,14 @@ export function FAQSection() {
     <section id="faq" className="py-32 px-6 pb-80">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
+          <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Details</p>
           <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">Frequently asked questions</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Everything you need to know before joining the waitlist. Something not here? Get in touch.
+            Everything you need to know before joining the waitlist. Something missing?{" "}
+            <a href="#waitlist" className="underline underline-offset-2 hover:text-foreground transition-colors">
+              Drop us a line there
+            </a>
+            .
           </p>
         </div>
 

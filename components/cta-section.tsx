@@ -11,6 +11,7 @@ export function CTASection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
+          <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Next step</p>
           <h2 className="text-4xl md:text-5xl font-normal leading-tight max-w-4xl mx-auto mb-6 font-serif">
             Ready to make content your competitive edge?
           </h2>
@@ -48,12 +49,12 @@ export function CTASection() {
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-16">
           <div className="text-center">
-            <p className="text-7xl font-light text-foreground">7</p>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Days immersed</p>
+            <p className="text-7xl font-light text-foreground">5</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">Nights at the retreat</p>
           </div>
           <div className="text-center">
-            <p className="text-7xl font-light text-foreground">8</p>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Founders per cohort</p>
+            <p className="text-7xl font-light text-foreground">21</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">Founders per cohort (max)</p>
           </div>
           <div className="text-center">
             <p className="text-7xl font-light text-foreground">4+</p>

@@ -31,12 +31,12 @@ export function WaitlistSection() {
       setFormState("success")
     } catch (err) {
       setFormState("error")
-      setErrorMessage(err instanceof Error ? err.message : "Something went wrong.")
+      setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.")
     }
   }
 
   return (
-    <section id="waitlist" className="py-32 px-6 bg-background">
+    <section id="waitlist" className="py-32 px-6 pb-[14vw] sm:pb-[16vw] lg:pb-[18vw] bg-background">
       <div className="max-w-xl mx-auto text-center">
         <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Waitlist</p>
         <h2 className="text-4xl md:text-5xl font-normal mb-4 text-balance font-serif">
@@ -86,18 +86,18 @@ export function WaitlistSection() {
             <button
               type="submit"
               disabled={formState === "loading"}
-              className="w-full relative flex items-center justify-center gap-0 bg-foreground text-background rounded-xl pl-6 pr-1.5 py-1.5 transition-all duration-300 group overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full relative flex items-center justify-center gap-0 bg-foreground text-background rounded-full pl-6 pr-1.5 py-1.5 transition-all duration-300 group overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <span className="text-sm pr-4 font-medium py-2.5">
-                {formState === "loading" ? "Joining..." : "Join the Waitlist"}
+                {formState === "loading" ? "Joining…" : "Join the Waitlist"}
               </span>
-              <span className="w-10 h-10 bg-background rounded-lg flex items-center justify-center ml-auto">
+              <span className="w-10 h-10 bg-background rounded-full flex items-center justify-center ml-auto">
                 <ArrowUpRight className="w-4 h-4 text-foreground" />
               </span>
             </button>
 
             <p className="text-xs text-muted-foreground">
-              A Consultico initiative. No spam, ever.
+              A Wilson Vincent Events initiative. No spam — just early access and updates.
             </p>
           </form>
         )}

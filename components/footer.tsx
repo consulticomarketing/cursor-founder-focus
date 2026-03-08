@@ -9,7 +9,7 @@ const footerLinks = {
     { label: "FAQ", href: "#faq" },
   ],
   company: [
-    { label: "Consultico", href: "https://consultico.co.uk" },
+    { label: "Wilson Vincent Events", href: "https://www.linkedin.com/company/wilson-vincent-events" },
     { label: "About", href: "#about" },
   ],
   legal: [
@@ -25,8 +25,8 @@ const footerLinks = {
 export function Footer() {
   return (
     <div className="relative">
-      <div className="absolute -top-[15vw] left-0 right-0 flex items-end justify-center overflow-visible pointer-events-none z-10">
-        <h2 className="font-bold text-center text-[28vw] sm:text-[25vw] md:text-[22vw] lg:text-[20vw] leading-[0.85] tracking-tighter text-zinc-100 whitespace-nowrap font-serif">
+      <div className="absolute -top-[6vw] sm:-top-[8vw] lg:-top-[10vw] left-0 right-0 flex items-end justify-center overflow-visible pointer-events-none z-10">
+        <h2 className="font-bold text-center text-[20vw] sm:text-[18vw] md:text-[16vw] lg:text-[14vw] leading-[0.85] tracking-tighter text-zinc-100 whitespace-nowrap font-serif">
           FOCUS
         </h2>
       </div>
@@ -120,8 +120,8 @@ export function Footer() {
             </p>
             <p className="text-xs text-muted-foreground">
               A{" "}
-              <Link href="https://consultico.co.uk" className="underline underline-offset-2 hover:text-foreground transition-colors">
-                Consultico
+              <Link href="https://www.linkedin.com/company/wilson-vincent-events" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground transition-colors">
+                Wilson Vincent Events
               </Link>{" "}
               initiative
             </p>

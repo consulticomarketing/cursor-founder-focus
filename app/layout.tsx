@@ -7,22 +7,22 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" })
 
+const siteDescription =
+  "One week. Every piece of content your business needs. A five-night retreat for UK founders in Scotland — VSL, podcast, social content, and ads produced in one focused stretch."
+
 export const metadata: Metadata = {
-  title: "Founder Focus Events — One Week. Every Piece of Content Your Business Needs.",
-  description:
-    "A week-long immersive retreat for UK founders. Content creation, sales focus, and founder community — all in a stunning Scottish house.",
+  title: "Founder Focus Events — One week. Every piece of content your business needs.",
+  description: siteDescription,
   openGraph: {
-    title: "Founder Focus Events",
-    description:
-      "A week-long immersive retreat for UK founders. VSL, podcast, social content, ads — all produced in one focused week.",
+    title: "Founder Focus Events — One week. Every piece of content your business needs.",
+    description: siteDescription,
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Founder Focus Events" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Founder Focus Events",
-    description:
-      "A week-long immersive retreat for UK founders. Content creation, sales focus, and founder community.",
+    title: "Founder Focus Events — One week. Every piece of content your business needs.",
+    description: siteDescription,
   },
 }
 

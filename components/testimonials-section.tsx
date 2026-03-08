@@ -7,7 +7,7 @@ const testimonials = [
     name: "James Thornton",
     role: "Founder, Thornton Digital",
     content:
-      "The idea of spending a full week away to get content done sounded ambitious. It was actually the most productive week I've had in two years of running a business.",
+      "The idea of spending five nights away to get content done sounded ambitious. It was actually the most productive stretch I've had in two years of running a business.",
     initials: "JT",
   },
   {
@@ -38,14 +38,14 @@ const testimonials2 = [
     name: "Tom Aldridge",
     role: "Co-founder, Aldridge Media",
     content:
-      "We came as co-founders and left with our whole content strategy mapped out, recorded, and ready to go. Incredible use of seven days.",
+      "We came as co-founders and left with our whole content strategy mapped out, recorded, and ready to go. Incredible use of five nights.",
     initials: "TA",
   },
   {
     name: "Fiona Grant",
     role: "Founder, Grant Advisory",
     content:
-      "Scotland was the perfect backdrop. Being removed from the city, from the emails, from the noise — it genuinely changed how we worked that week.",
+      "Scotland was the perfect backdrop. Being removed from the city, from the emails, from the noise — it genuinely changed how we worked that retreat.",
     initials: "FG",
   },
 ]
@@ -120,8 +120,11 @@ export function TestimonialsSection() {
     <section id="testimonials" className="py-32 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
+          <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Community</p>
           <h2 className="text-4xl md:text-5xl font-normal leading-tight font-serif">What founders say</h2>
-          <p className="text-muted-foreground mt-4 text-sm">Placeholder — real testimonials added after first cohort</p>
+          <p className="text-muted-foreground mt-4 max-w-xl mx-auto text-sm">
+            Real stories from founders who’ve done intensive content sprints — more to come after our first cohort.
+          </p>
         </div>
 
         <div className="space-y-6">

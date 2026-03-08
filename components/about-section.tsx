@@ -126,7 +126,7 @@ export function AboutSection() {
                   environment to actually do it. Founder Focus Events fixes that in a week.
                 </p>
                 <p>
-                  We bring a small group of UK founders to a large private house in Scotland for seven days — with
+                  We bring a cohort of UK founders to a large private house in Scotland for five nights — with
                   professional production, structured work time, and the kind of peer energy that makes things happen.
                 </p>
               </div>
@@ -140,7 +140,7 @@ export function AboutSection() {
             Everything that happens in the week
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Content production, sales focus, and founder community — all in one structured, immersive week.
+            Content production, sales focus, and founder community — all in one structured, five-night retreat.
           </p>
         </div>
 
