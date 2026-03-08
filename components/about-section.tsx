@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Camera, Mic, Share2, Video, Shield, Users } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
@@ -106,8 +107,17 @@ export function AboutSection() {
           className="relative px-6 lg:px-16 py-16 lg:py-20 mb-32 overflow-hidden rounded-3xl"
         >
           <div className="absolute inset-0 w-full h-full">
+            {/* Background image: right on desktop, full behind text on tablet/mobile */}
+            <Image
+              src="/about-recording.png"
+              alt="Founder Focus recording session — professional interview setup in a studio environment"
+              fill
+              className="object-cover object-center lg:object-right"
+              sizes="(max-width: 1023px) 100vw, 50vw"
+              priority={false}
+            />
             <div
-              className={`w-full h-full bg-gradient-to-br from-zinc-800 to-stone-900 transition-transform duration-1000 ease-out ${
+              className={`absolute inset-0 w-full h-full bg-gradient-to-br from-zinc-900/85 via-zinc-800/75 to-stone-900/70 transition-transform duration-1000 ease-out ${
                 isVisible ? "scale-100" : "scale-110"
               }`}
             />
