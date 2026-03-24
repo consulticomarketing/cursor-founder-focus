@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { AnimatedText } from "./animated-text"
 import { ArrowUpRight, ArrowRight } from "lucide-react"
+import { EVENT_DATES_LABEL } from "@/lib/site"
 
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false)
@@ -99,7 +100,7 @@ export function HeroSection() {
             className={`transition-all duration-1000 delay-[400ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
           >
             <p className="mb-6 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium tracking-widest text-white/70 uppercase backdrop-blur-sm">
-              Scotland — 2025
+              {EVENT_DATES_LABEL} · Scotland
             </p>
           </div>
 
@@ -115,16 +116,16 @@ export function HeroSection() {
             className={`transition-all duration-1000 delay-[800ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           >
             <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/60">
-              A five-night retreat in a large Scottish house — content creation, dedicated sales time,
-              and real founder community. Leave with your VSL, podcast, social media, and ads done.
+              A four-night retreat in a large Scottish house - content creation, dedicated sales time,
+              and real founder community. Leave with professional-grade podcasts, social media, and ads recorded for you.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="#waitlist"
+                href="#reserve"
                 className="relative flex items-center justify-center gap-0 bg-white text-black rounded-full pl-6 pr-1.5 py-1.5 transition-all duration-300 group overflow-hidden"
               >
-                <span className="text-sm pr-4 font-medium">Join the Waitlist</span>
+                <span className="text-sm pr-4 font-medium">Reserve your spot today</span>
                 <span className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
                   <ArrowUpRight className="w-4 h-4 text-white" />
                 </span>
@@ -145,7 +146,7 @@ export function HeroSection() {
               </a>
             </div>
 
-            <p className="mt-6 text-sm text-white/30">Limited spots — UK founders only</p>
+            <p className="mt-6 text-sm text-white/30">Limited spots - UK founders only</p>
           </div>
         </div>
       </div>

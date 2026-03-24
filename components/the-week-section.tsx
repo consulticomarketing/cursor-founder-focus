@@ -14,17 +14,17 @@ const weekDays = [
   },
   {
     day: "Tuesday",
-    focus: "VSL Day",
+    focus: "Studio & long-form",
     description:
-      "Full day dedicated to scripting and recording Video Sales Letters. Professional setup on-site, director on hand, editing begins same day.",
-    tags: ["VSL recording", "Direction", "Same-day edit"],
+      "Deep studio day for podcast episodes, interviews, and supporting video - crew, lighting, and audio dialled in for release-ready capture.",
+    tags: ["Podcast", "Interviews", "Studio capture"],
     color: "from-blue-400 to-indigo-500",
   },
   {
     day: "Wednesday",
     focus: "Podcast & Audio",
     description:
-      "Record multiple podcast episodes — solo and with fellow founders as guests. Studio-quality audio, post-production handled for you.",
+      "Record multiple podcast episodes - solo and with fellow founders as guests. Studio-quality audio, post-production handled for you.",
     tags: ["Podcast recording", "Guest episodes", "Post-production"],
     color: "from-violet-400 to-purple-500",
   },
@@ -32,33 +32,17 @@ const weekDays = [
     day: "Thursday",
     focus: "Social & Ad Creative",
     description:
-      "Batch-create social content: reels, talking-head clips, carousels. Afternoon session for ad creative — video and static formats.",
+      "Batch-create social content: reels, talking-head clips, carousels. Afternoon session for ad creative - video and static formats.",
     tags: ["Reels", "Ad creative", "Social batch"],
     color: "from-amber-400 to-orange-500",
   },
   {
     day: "Friday",
-    focus: "Sales & Fulfilment",
+    focus: "Review, sales & depart",
     description:
-      "Deep-work day. Sales calls, outreach, and pipeline work in a focused environment. Accountability pairs keep momentum high.",
-    tags: ["Sales calls", "Deep work", "Accountability"],
+      "Morning review of the week's output, then sales and pipeline work. Afternoon depart with a full content suite, a clearer pipeline, and a network of founders who get what you're building.",
+    tags: ["Content review", "Sales", "Depart"],
     color: "from-emerald-400 to-teal-500",
-  },
-  {
-    day: "Saturday",
-    focus: "Review & Debrief",
-    description:
-      "Review the week's output together. Group feedback on content, connections for future collaboration, and plans for what comes next.",
-    tags: ["Content review", "Peer feedback", "Next steps"],
-    color: "from-rose-400 to-pink-500",
-  },
-  {
-    day: "Sunday",
-    focus: "Depart",
-    description:
-      "Pack up, depart with a full content suite, a renewed sales pipeline, and a network of founders who actually understand what you're building.",
-    tags: ["Depart", "Full content library", "Founder network"],
-    color: "from-cyan-400 to-blue-500",
   },
 ]
 
@@ -107,7 +91,8 @@ export function TheWeekSection() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Day by day</p>
           <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">What happens during the week</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Five nights, structured around content creation, deep work, and founder community. Every day has a purpose.
+            Four nights, Monday to Friday - structured around content creation, deep work, and founder community. First
+            cohort: 4–8 May 2026.
           </p>
         </motion.div>
       </div>

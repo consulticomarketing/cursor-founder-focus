@@ -16,16 +16,16 @@ export function CTASection() {
             Ready to make content your competitive edge?
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto mb-10">
-            Join the waitlist and be first to know when doors open. Spots are limited to keep the cohort small and the
-            output high.
+            Deposits are open for 4–8 May 2026. Reserve with a deposit or sign up for email updates only - spots stay
+            limited to keep the cohort small and the output high.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#waitlist"
+              href="#reserve"
               className="relative flex items-center justify-center gap-0 bg-foreground text-background rounded-full pl-6 pr-1.5 py-1.5 transition-all duration-300 group overflow-hidden"
             >
-              <span className="text-sm pr-4 font-medium">Join the Waitlist</span>
+              <span className="text-sm pr-4 font-medium">Reserve a spot</span>
               <span className="w-10 h-10 bg-background rounded-full flex items-center justify-center">
                 <ArrowUpRight className="w-4 h-4 text-foreground" />
               </span>
@@ -49,8 +49,8 @@ export function CTASection() {
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-16">
           <div className="text-center">
-            <p className="text-7xl font-light text-foreground">5</p>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Nights at the retreat</p>
+            <p className="text-7xl font-light text-foreground">4</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">Nights (first cohort)</p>
           </div>
           <div className="text-center">
             <p className="text-7xl font-light text-foreground">21</p>

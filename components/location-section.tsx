@@ -18,7 +18,7 @@ export function LocationSection() {
               A private estate in the Scottish Highlands
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Location to be confirmed — but expect space, quiet, and scenery that puts London and its distractions
+              Location to be confirmed - but expect space, quiet, and scenery that puts London and its distractions
               a long way away.
             </p>
           </motion.div>
@@ -33,12 +33,12 @@ export function LocationSection() {
             },
             {
               title: "Studio setup",
-              description: "Professional content production setup on-site — cameras, lighting, audio, editing.",
+              description: "Professional content production setup on-site - cameras, lighting, audio, editing.",
               emoji: "🎬",
             },
             {
               title: "Fully catered",
-              description: "Meals taken care of. No cooking, no admin — just work and connection.",
+              description: "Meals taken care of. No cooking, no admin - just work and connection.",
               emoji: "🍽️",
             },
             {
@@ -73,7 +73,7 @@ export function LocationSection() {
           <div className="text-center">
             <p className="text-6xl mb-4">🏴󠁧󠁢󠁳󠁣󠁴󠁿</p>
             <p className="text-muted-foreground text-sm font-medium">Venue photo coming soon</p>
-            <p className="text-muted-foreground/60 text-xs mt-1">Scottish Highlands, 2025</p>
+            <p className="text-muted-foreground/60 text-xs mt-1">Scottish Highlands · May 2026</p>
           </div>
         </motion.div>
       </div>

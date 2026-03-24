@@ -29,7 +29,7 @@ function useCountUp(end: number, duration = 2000, suffix = "") {
 export function StatsSection() {
   const [isVisible, setIsVisible] = useState(false)
 
-  const nights = useCountUp(5, 1500, "")
+  const nights = useCountUp(4, 1500, "")
   const founders = useCountUp(21, 1500, "")
   const pieces = useCountUp(4, 1500, "")
   const retreats = useCountUp(1, 800, "")
@@ -53,7 +53,7 @@ export function StatsSection() {
   }, [isVisible])
 
   const stats = [
-    { stat: nights, label: "Nights at the retreat" },
+    { stat: nights, label: "Nights (first cohort)" },
     { stat: founders, label: "Founders per cohort (max)" },
     { stat: pieces, label: "Content types produced" },
     { stat: retreats, label: "Retreat. Fully focused." },

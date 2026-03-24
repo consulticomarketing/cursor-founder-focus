@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Placeholder — swap for Resend / Mailchimp / Tally later
+    // Placeholder - swap for Resend / Mailchimp / Tally later
     console.log(`[Waitlist signup] Name: ${name} | Email: ${email}`);
 
     return NextResponse.json({ success: true }, { status: 200 });

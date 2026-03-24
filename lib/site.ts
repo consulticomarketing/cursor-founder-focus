@@ -1,0 +1,2 @@
+/** First cohort - shown across hero, FAQ, onboarding, reserve section */
+export const EVENT_DATES_LABEL = "4–8 May 2026"

@@ -7,21 +7,21 @@ const testimonials = [
     name: "James Thornton",
     role: "Founder, Thornton Digital",
     content:
-      "The idea of spending five nights away to get content done sounded ambitious. It was actually the most productive stretch I've had in two years of running a business.",
+      "The idea of spending four nights away to get content done sounded ambitious. It was actually the most productive stretch I've had in two years of running a business.",
     initials: "JT",
   },
   {
     name: "Sarah McKinlay",
     role: "Founder, Branda Studio",
     content:
-      "I left with a VSL, six podcast episodes, and enough social content to last three months. The founder connections were just as valuable.",
+      "I left with six podcast episodes in the bag and enough social content to last three months. The founder connections were just as valuable.",
     initials: "SM",
   },
   {
     name: "Rory Campbell",
     role: "Founder, Campbell Consulting",
     content:
-      "I'd been 'meaning to record my VSL' for eight months. By Tuesday it was done. That's the point of Founder Focus — it just gets done.",
+      "I'd been meaning to batch real podcast episodes for months. By mid-week we had them in the can. That's the point of Founder Focus - it just gets done.",
     initials: "RC",
   },
 ]
@@ -38,14 +38,14 @@ const testimonials2 = [
     name: "Tom Aldridge",
     role: "Co-founder, Aldridge Media",
     content:
-      "We came as co-founders and left with our whole content strategy mapped out, recorded, and ready to go. Incredible use of five nights.",
+      "We came as co-founders and left with our whole content strategy mapped out, recorded, and ready to go. Incredible use of four nights.",
     initials: "TA",
   },
   {
     name: "Fiona Grant",
     role: "Founder, Grant Advisory",
     content:
-      "Scotland was the perfect backdrop. Being removed from the city, from the emails, from the noise — it genuinely changed how we worked that retreat.",
+      "Scotland was the perfect backdrop. Being removed from the city, from the emails, from the noise - it genuinely changed how we worked that retreat.",
     initials: "FG",
   },
 ]
@@ -123,7 +123,7 @@ export function TestimonialsSection() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Community</p>
           <h2 className="text-4xl md:text-5xl font-normal leading-tight font-serif">What founders say</h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto text-sm">
-            Real stories from founders who’ve done intensive content sprints — more to come after our first cohort.
+            Real stories from founders who’ve done intensive content sprints - more to come after our first cohort.
           </p>
         </div>
 

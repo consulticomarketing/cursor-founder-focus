@@ -4,17 +4,17 @@ import { Check, X } from "lucide-react"
 import { motion } from "framer-motion"
 
 const forYou = [
-  "You're running a business but have no content strategy — or the content you have isn't converting.",
+  "You're running a business but have no content strategy - or the content you have isn't converting.",
   "You know what you need to create but keep deprioritising it for client work.",
   "You want to grow through video, podcast, or paid ads but haven't started.",
   "You work better in a structured, in-person environment than alone at a desk.",
-  "You want peer founders who are at a similar stage — not a room full of beginners.",
+  "You want peer founders who are at a similar stage - not a room full of beginners.",
 ]
 
 const notForYou = [
-  "You're looking for a passive retreat — this one is high output.",
+  "You're looking for a passive retreat - this one is high output.",
   "You're pre-revenue and not yet ready to invest in content at scale.",
-  "You can't commit to the full five nights.",
+  "You can't commit to the full four nights.",
 ]
 
 export function WhoItsForSection() {
@@ -98,10 +98,10 @@ export function WhoItsForSection() {
 
         <div className="mt-12 text-center">
           <a
-            href="#waitlist"
+            href="#reserve"
             className="relative inline-flex items-center justify-center gap-0 bg-foreground text-background rounded-full pl-6 pr-1.5 py-1.5 transition-all duration-300 group overflow-hidden"
           >
-            <span className="text-sm pr-4 font-medium">Join the Waitlist</span>
+            <span className="text-sm pr-4 font-medium">Reserve a spot</span>
             <span className="w-10 h-10 bg-background rounded-full flex items-center justify-center">
               <Check className="w-4 h-4 text-foreground" />
             </span>

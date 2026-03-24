@@ -56,6 +56,7 @@ export function Header() {
           <nav className="hidden md:flex items-center gap-8">
             {[
               { label: "The Week", id: "the-week" },
+              { label: "Add-ons", id: "add-ons" },
               { label: "Who It's For", id: "who-its-for" },
               { label: "Location", id: "location" },
               { label: "FAQ", id: "faq" },
@@ -75,8 +76,8 @@ export function Header() {
 
           <div className="hidden md:flex items-center gap-1">
             <a
-              href="#waitlist"
-              onClick={(e) => handleSmoothScroll(e, "waitlist")}
+              href="#reserve"
+              onClick={(e) => handleSmoothScroll(e, "reserve")}
               className={`relative flex items-center gap-0 border rounded-full pl-5 pr-1 py-1 transition-all duration-300 group overflow-hidden ${
                 isScrolled ? "border-zinc-300" : "border-border"
               }`}
@@ -91,7 +92,7 @@ export function Header() {
                   isScrolled ? "text-black group-hover:text-white" : "text-foreground group-hover:text-background"
                 }`}
               >
-                Join the Waitlist
+                Reserve a spot
               </span>
               <span className="w-8 h-8 rounded-full flex items-center justify-center relative z-10">
                 <ArrowRight
@@ -124,6 +125,7 @@ export function Header() {
           >
             {[
               { label: "The Week", id: "the-week" },
+              { label: "Add-ons", id: "add-ons" },
               { label: "Who It's For", id: "who-its-for" },
               { label: "Location", id: "location" },
               { label: "FAQ", id: "faq" },
@@ -143,8 +145,8 @@ export function Header() {
               className={`mt-4 pt-4 border-t ${isScrolled ? "border-zinc-200" : "border-border"}`}
             >
               <a
-                href="#waitlist"
-                onClick={(e) => handleSmoothScroll(e, "waitlist")}
+                href="#reserve"
+                onClick={(e) => handleSmoothScroll(e, "reserve")}
                 className={`relative flex items-center gap-0 border rounded-full pl-5 pr-1 py-1 w-fit transition-all duration-300 group overflow-hidden ${
                   isScrolled ? "border-zinc-300" : "border-border"
                 }`}
@@ -159,7 +161,7 @@ export function Header() {
                     isScrolled ? "text-black group-hover:text-white" : "text-foreground group-hover:text-background"
                   }`}
                 >
-                  Join the Waitlist
+                  Reserve a spot
                 </span>
                 <span className="w-8 h-8 rounded-full flex items-center justify-center relative z-10">
                   <ArrowRight className={`w-4 h-4 ${isScrolled ? "text-black" : "text-foreground"}`} />

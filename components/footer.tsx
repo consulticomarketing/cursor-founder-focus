@@ -4,6 +4,7 @@ import { Linkedin } from "lucide-react"
 const footerLinks = {
   programme: [
     { label: "The Week", href: "#the-week" },
+    { label: "Add-ons", href: "#add-ons" },
     { label: "Who It's For", href: "#who-its-for" },
     { label: "Location", href: "#location" },
     { label: "FAQ", href: "#faq" },
@@ -17,7 +18,7 @@ const footerLinks = {
     { label: "Privacy", href: "#" },
   ],
   connect: [
-    { label: "Join the Waitlist", href: "#waitlist" },
+    { label: "Reserve a spot", href: "#reserve" },
     { label: "LinkedIn", href: "https://linkedin.com" },
   ],
 }

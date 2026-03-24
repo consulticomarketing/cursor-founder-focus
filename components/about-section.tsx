@@ -1,15 +1,15 @@
 "use client"
 
 import Image from "next/image"
-import { Camera, Mic, Share2, Video, Shield, Users } from "lucide-react"
+import { Camera, Mic, Share2, Film, Shield, Users } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
 const services = [
   {
-    icon: Video,
-    title: "VSL Recording",
+    icon: Film,
+    title: "Studio & podcast capture",
     description:
-      "A professional video sales letter recorded, directed, and edited for your business — ready to convert.",
+      "Multi-mic podcast episodes, guest interviews, and supporting video - recorded and edited on-site to a release-ready standard.",
   },
   {
     icon: Mic,
@@ -21,7 +21,7 @@ const services = [
     icon: Share2,
     title: "Social Media Content",
     description:
-      "A full batch of reels, carousels, and short-form clips — enough to stay consistent for months.",
+      "A full batch of reels, carousels, and short-form clips - enough to stay consistent for months.",
   },
   {
     icon: Camera,
@@ -38,7 +38,7 @@ const services = [
     icon: Users,
     title: "Founder Community",
     description:
-      "Shared space, shared meals, and evening sessions with founders at a similar stage — no beginners, no tourists.",
+      "Shared space, shared meals, and evening sessions with founders at a similar stage - no beginners, no tourists.",
   },
 ]
 
@@ -110,7 +110,7 @@ export function AboutSection() {
             {/* Background image: right on desktop, full behind text on tablet/mobile */}
             <Image
               src="/about-recording.png"
-              alt="Founder Focus recording session — professional interview setup in a studio environment"
+              alt="Founder Focus recording session - professional interview setup in a studio environment"
               fill
               className="object-cover object-center lg:object-right"
               sizes="(max-width: 1023px) 100vw, 50vw"
@@ -136,7 +136,7 @@ export function AboutSection() {
                   environment to actually do it. Founder Focus Events fixes that in a week.
                 </p>
                 <p>
-                  We bring a cohort of UK founders to a large private house in Scotland for five nights — with
+                  We bring a cohort of UK founders to a large private house in Scotland for four nights - with
                   professional production, structured work time, and the kind of peer energy that makes things happen.
                 </p>
               </div>
@@ -147,10 +147,15 @@ export function AboutSection() {
         {/* Services grid */}
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">
-            Everything that happens in the week
+            Included in the base retreat
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Content production, sales focus, and founder community — all in one structured, five-night retreat.
+            Podcast, social, ads, deep work, and community - all in one structured, four-night week. Want VSL
+            production, extra podcast support, release help, or on-site EA cover? See{" "}
+            <a href="#add-ons" className="text-foreground underline underline-offset-2 hover:no-underline">
+              optional add-ons
+            </a>{" "}
+            (each booked separately; a bundle offer will follow).
           </p>
         </div>
 
