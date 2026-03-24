@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" })
 
 const siteDescription =
-  "One week. Every piece of content your business needs. A four-night retreat for UK founders in Scotland - podcast, social content, and ads in the base week; optional add-ons (VSL, podcast mentoring, release support, EA) available separately. First cohort: 4–8 May 2026."
+  "One week. Every piece of content your business needs. A four-night retreat for UK founders in Scotland - podcast, social content, and ads; optional add-ons include VSL, podcast mentoring, release support, and EA. 4–8 May 2026."
 
 export const metadata: Metadata = {
   title: "Founder Focus Events - One week. Every piece of content your business needs.",

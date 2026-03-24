@@ -42,14 +42,10 @@ export function AddOnsSection() {
           viewport={{ once: true }}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <p className="text-sm uppercase tracking-widest text-white/50 mb-4">Beyond the base retreat</p>
-          <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif text-white">
-            Optional add-ons
-          </h2>
+          <p className="text-sm uppercase tracking-widest text-white/50 mb-4">Optional</p>
+          <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif text-white">Add-ons</h2>
           <p className="text-white/65 leading-relaxed text-lg">
-            None of these are included in the standard ticket. Each add-on is its own thing - pick what you need, and
-            we&apos;ll quote and confirm it for your cohort. A combined bundle is in the works and will be announced
-            separately.
+            Each add-on is its own thing - pick what you need and we&apos;ll quote and confirm it for your cohort.
           </p>
         </motion.div>
 
@@ -70,7 +66,6 @@ export function AddOnsSection() {
                     <Icon className="w-6 h-6 text-white/90" strokeWidth={1.25} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">Separate add-on</p>
                     <h3 className="text-lg font-semibold font-serif text-white mb-3">{item.title}</h3>
                     <p className="text-white/60 text-sm leading-relaxed">{item.description}</p>
                   </div>
@@ -87,8 +82,8 @@ export function AddOnsSection() {
           viewport={{ once: true }}
           className="text-center text-white/45 text-sm mt-12 max-w-xl mx-auto"
         >
-          When you reserve or in onboarding, say which add-ons you want - we&apos;ll confirm availability and pricing
-          for each.
+          When you reserve or in onboarding, say which add-ons you want - we&apos;ll confirm availability and pricing for
+          each.
         </motion.p>
       </div>
     </section>

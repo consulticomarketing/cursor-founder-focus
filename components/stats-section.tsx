@@ -53,8 +53,8 @@ export function StatsSection() {
   }, [isVisible])
 
   const stats = [
-    { stat: nights, label: "Nights (first cohort)" },
-    { stat: founders, label: "Founders per cohort (max)" },
+    { stat: nights, label: "Nights at the retreat" },
+    { stat: founders, label: "Founders per cohort" },
     { stat: pieces, label: "Content types produced" },
     { stat: retreats, label: "Retreat. Fully focused." },
   ]

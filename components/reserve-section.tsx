@@ -40,7 +40,7 @@ export function ReserveSection() {
   return (
     <section id="reserve" className="py-32 px-6 pb-[14vw] sm:pb-[16vw] lg:pb-[18vw] bg-background">
       <div className="max-w-xl mx-auto text-center">
-        <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">First cohort</p>
+        <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Reserve</p>
         <h2 className="text-4xl md:text-5xl font-normal mb-4 text-balance font-serif">
           Reserve your spot - deposits open
         </h2>

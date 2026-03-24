@@ -4,7 +4,7 @@ const faqs = [
   {
     question: "When is the first event?",
     answer:
-      "The first cohort runs 4–8 May 2026 (Monday to Friday) in the Scottish Highlands. Pay a deposit to reserve your place, then complete onboarding - or join the email list for updates only.",
+      "4–8 May 2026, Monday to Friday, in the Scottish Highlands. Pay a deposit to reserve your place, then complete onboarding - or join the email list for updates only.",
   },
   {
     question: "Who is this for?",
@@ -14,17 +14,17 @@ const faqs = [
   {
     question: "What content will I leave with?",
     answer:
-      "Base retreat: multiple podcast episodes, a batch of social media content (reels, clips, carousels), ad creative, and protected time for sales work - exact output varies by business and we'll align before the week. A full VSL is not included by default. You can add individual optional extras (VSL production, podcast mentoring & storyboarding, content management & release, executive assistant for the week) - each is priced and confirmed separately.",
+      "Multiple podcast episodes, a batch of social media content (reels, clips, carousels), ad creative, and protected time for sales work - exact output varies by business and we'll align before the week. Optional add-ons such as VSL production, podcast mentoring and storyboarding, content management and release, or an executive assistant for the week can be quoted separately.",
   },
   {
     question: "What optional add-ons are available?",
     answer:
-      "Four separate add-ons, none included in the standard ticket: VSL production; production-grade podcast mentoring and storyboarding; content management and release; executive assistant for the week. Pick only what you need - we'll quote each. A combined bundle is planned and will be announced separately.",
+      "VSL production; production-grade podcast mentoring and storyboarding; content management and release; executive assistant for the week. Pick what you need - we'll quote each.",
   },
   {
     question: "What does the week cost?",
     answer:
-      "Full pricing reflects four nights' accommodation, professional production, catering, and facilitation. We're taking deposits for the first cohort now; balance and payment schedule are confirmed after you reserve. Email updates are available if you're not ready to commit yet.",
+      "Full pricing reflects four nights' accommodation, professional production, catering, and facilitation. We're taking deposits now; balance and payment schedule are confirmed after you reserve. Email updates are available if you're not ready to commit yet.",
   },
   {
     question: "How many founders will be there?",
@@ -34,7 +34,7 @@ const faqs = [
   {
     question: "Do I need to prepare anything?",
     answer:
-      "We'll send a prep guide to everyone before the week. Expect to have a clear sense of your content goals, rough outlines for what you want to record, and any existing brand assets ready. If you add VSL production as an add-on, we'll brief you on script and messaging prep separately.",
+      "We'll send a prep guide to everyone before the week. Expect to have a clear sense of your content goals, rough outlines for what you want to record, and any existing brand assets ready. If you book VSL production, we'll brief you on script and messaging prep separately.",
   },
   {
     question: "What is Founder Focus Events' connection to Wilson Vincent Events?",

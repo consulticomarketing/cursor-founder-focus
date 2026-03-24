@@ -50,11 +50,11 @@ export function CTASection() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-16">
           <div className="text-center">
             <p className="text-7xl font-light text-foreground">4</p>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Nights (first cohort)</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">Nights at the retreat</p>
           </div>
           <div className="text-center">
             <p className="text-7xl font-light text-foreground">21</p>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Founders per cohort (max)</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">Founders per cohort</p>
           </div>
           <div className="text-center">
             <p className="text-7xl font-light text-foreground">4+</p>

@@ -116,8 +116,9 @@ export function HeroSection() {
             className={`transition-all duration-1000 delay-[800ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           >
             <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/60">
-              A four-night retreat in a large Scottish house - content creation, dedicated sales time,
-              and real founder community. Leave with professional-grade podcasts, social media, and ads recorded for you.
+              A four-night retreat at a Scottish estate worthy of your video content - content creation, dedicated sales
+              time, and real founder community. Leave with professional-grade podcasts, social media, and ads recorded
+              for you.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -123,7 +123,7 @@ export function TestimonialsSection() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Community</p>
           <h2 className="text-4xl md:text-5xl font-normal leading-tight font-serif">What founders say</h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto text-sm">
-            Real stories from founders who’ve done intensive content sprints - more to come after our first cohort.
+            Real stories from founders who’ve done intensive content sprints - more to come.
           </p>
         </div>
 

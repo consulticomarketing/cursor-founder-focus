@@ -1,8 +1,11 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import { EVENT_DATES_LABEL } from "@/lib/site"
 
+/**
+ * Day-by-day schedule for the retreat. Edit `weekDays` to update copy.
+ */
 const weekDays = [
   {
     day: "Monday",
@@ -10,7 +13,7 @@ const weekDays = [
     description:
       "Arrive at the house, settle in, and meet the cohort. Evening kick-off: align on goals for the week and set the tone for deep work.",
     tags: ["Arrivals", "Team dinner", "Goal-setting"],
-    color: "from-slate-400 to-zinc-500",
+    accent: "border-l-slate-400",
   },
   {
     day: "Tuesday",
@@ -18,7 +21,7 @@ const weekDays = [
     description:
       "Deep studio day for podcast episodes, interviews, and supporting video - crew, lighting, and audio dialled in for release-ready capture.",
     tags: ["Podcast", "Interviews", "Studio capture"],
-    color: "from-blue-400 to-indigo-500",
+    accent: "border-l-blue-500",
   },
   {
     day: "Wednesday",
@@ -26,7 +29,7 @@ const weekDays = [
     description:
       "Record multiple podcast episodes - solo and with fellow founders as guests. Studio-quality audio, post-production handled for you.",
     tags: ["Podcast recording", "Guest episodes", "Post-production"],
-    color: "from-violet-400 to-purple-500",
+    accent: "border-l-violet-500",
   },
   {
     day: "Thursday",
@@ -34,7 +37,7 @@ const weekDays = [
     description:
       "Batch-create social content: reels, talking-head clips, carousels. Afternoon session for ad creative - video and static formats.",
     tags: ["Reels", "Ad creative", "Social batch"],
-    color: "from-amber-400 to-orange-500",
+    accent: "border-l-amber-500",
   },
   {
     day: "Friday",
@@ -42,89 +45,52 @@ const weekDays = [
     description:
       "Morning review of the week's output, then sales and pipeline work. Afternoon depart with a full content suite, a clearer pipeline, and a network of founders who get what you're building.",
     tags: ["Content review", "Sales", "Depart"],
-    color: "from-emerald-400 to-teal-500",
+    accent: "border-l-emerald-500",
   },
 ]
 
 export function TheWeekSection() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
-  const positionRef = useRef(0)
-  const animationRef = useRef<number>(0)
-
-  const tripled = [...weekDays, ...weekDays, ...weekDays]
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current
-    if (!scrollContainer) return
-
-    const speed = isHovered ? 0.3 : 1
-    let lastTime = performance.now()
-
-    const animate = (currentTime: number) => {
-      const deltaTime = currentTime - lastTime
-      lastTime = currentTime
-      positionRef.current += speed * (deltaTime / 16)
-
-      const totalWidth = scrollContainer.scrollWidth / 3
-      if (positionRef.current >= totalWidth) positionRef.current = 0
-
-      scrollContainer.style.transform = `translateX(-${positionRef.current}px)`
-      animationRef.current = requestAnimationFrame(animate)
-    }
-
-    animationRef.current = requestAnimationFrame(animate)
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current)
-    }
-  }, [isHovered])
-
   return (
-    <section id="the-week" className="py-32 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-20">
+    <section id="the-week" className="py-32 px-6">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
+          className="text-center mb-14 md:mb-16 max-w-2xl mx-auto"
         >
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Day by day</p>
           <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">What happens during the week</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Four nights, Monday to Friday - structured around content creation, deep work, and founder community. First
-            cohort: 4–8 May 2026.
+          <p className="text-muted-foreground leading-relaxed">
+            Four nights, Monday to Friday. {EVENT_DATES_LABEL}.
           </p>
         </motion.div>
-      </div>
 
-      <div
-        className="relative w-full"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div ref={scrollRef} className="flex gap-6 px-6" style={{ width: "fit-content" }}>
-          {tripled.map((day, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 w-[85vw] sm:w-[60vw] lg:w-[380px] bg-card border border-border rounded-3xl p-8 hover:shadow-lg transition-shadow duration-300"
+        <div className="max-w-3xl mx-auto flex flex-col gap-5 md:gap-6">
+          {weekDays.map((d) => (
+            <article
+              key={d.day}
+              className={`rounded-2xl border border-border bg-card pl-5 pr-6 py-6 md:pl-6 md:pr-8 md:py-8 border-l-4 ${d.accent} shadow-sm`}
             >
-              <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${day.color} mb-6 flex items-center justify-center`}>
-                <span className="text-white text-xs font-bold">{day.day.slice(0, 2).toUpperCase()}</span>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{d.day}</span>
+                  <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground">{d.focus}</h3>
+                </div>
+                <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed">{d.description}</p>
+                <ul className="flex flex-wrap gap-2 pt-1">
+                  {d.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="px-3 py-1 bg-secondary text-secondary-foreground text-xs rounded-full"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{day.day}</p>
-              <h3 className="text-xl font-semibold text-foreground mb-4 font-serif">{day.focus}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">{day.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {day.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground text-xs rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

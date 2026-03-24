@@ -1,15 +1,15 @@
 "use client"
 
 import Image from "next/image"
-import { Camera, Mic, Share2, Film, Shield, Users } from "lucide-react"
+import { Camera, Mic, Share2, Layers, Shield, Users } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
 const services = [
   {
-    icon: Film,
-    title: "Studio & podcast capture",
+    icon: Layers,
+    title: "Post-production & delivery",
     description:
-      "Multi-mic podcast episodes, guest interviews, and supporting video - recorded and edited on-site to a release-ready standard.",
+      "Editing, mixing, and files ready to publish - so what you capture in the week becomes usable assets, not a hard drive of rushes.",
   },
   {
     icon: Mic,
@@ -136,8 +136,9 @@ export function AboutSection() {
                   environment to actually do it. Founder Focus Events fixes that in a week.
                 </p>
                 <p>
-                  We bring a cohort of UK founders to a large private house in Scotland for four nights - with
-                  professional production, structured work time, and the kind of peer energy that makes things happen.
+                  We bring a cohort of UK founders to a Scottish estate worthy of your video content - four nights
+                  with professional production, structured work time, and the kind of peer energy that makes things
+                  happen.
                 </p>
               </div>
             </div>
@@ -146,16 +147,14 @@ export function AboutSection() {
 
         {/* Services grid */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">
-            Included in the base retreat
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">What&apos;s included</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Podcast, social, ads, deep work, and community - all in one structured, four-night week. Want VSL
-            production, extra podcast support, release help, or on-site EA cover? See{" "}
+            Podcast, social, ads, deep work, and community in one structured four-night week. Optional extras such as
+            VSL production, podcast mentoring, release support, or on-site EA cover are listed under{" "}
             <a href="#add-ons" className="text-foreground underline underline-offset-2 hover:no-underline">
-              optional add-ons
-            </a>{" "}
-            (each booked separately; a bundle offer will follow).
+              add-ons
+            </a>
+            .
           </p>
         </div>
 
