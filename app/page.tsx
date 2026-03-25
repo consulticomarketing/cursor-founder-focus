@@ -7,7 +7,6 @@ import { AddOnsSection } from "@/components/add-ons-section"
 import { WhoItsForSection } from "@/components/who-its-for-section"
 import { CTASection } from "@/components/cta-section"
 import { LocationSection } from "@/components/location-section"
-import { TestimonialsSection } from "@/components/testimonials-section"
 import { FAQSection } from "@/components/faq-section"
 import { ReserveSection } from "@/components/reserve-section"
 import { Footer } from "@/components/footer"
@@ -24,7 +23,6 @@ export default function Home() {
       <WhoItsForSection />
       <CTASection />
       <LocationSection />
-      <TestimonialsSection />
       <FAQSection />
       <ReserveSection />
       <Footer />

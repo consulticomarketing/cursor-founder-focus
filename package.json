@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "verify:sheets": "npx tsx scripts/verify-google-sheet.ts",
+    "sync:sheet-headers": "npx tsx scripts/write-onboarding-sheet-headers.ts",
     "deploy": "vercel --prod"
   },
   "dependencies": {
@@ -15,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.35.1",
+    "googleapis": "^171.4.0",
     "lucide-react": "^0.577.0",
     "next": "16.1.6",
     "next-themes": "^0.4.6",
@@ -31,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",

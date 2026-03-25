@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "framer-motion"
 
 export function LocationSection() {
@@ -18,8 +19,9 @@ export function LocationSection() {
               A private estate in the Scottish Highlands
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Location to be confirmed - but expect space, quiet, and scenery that puts London and its distractions
-              a long way away.
+              Location to be confirmed—but expect space, quiet, and scenery that puts London and its distractions a
+              long way away. The photo below is a potential example of the calibre of property we book; it is not the
+              confirmed venue.
             </p>
           </motion.div>
         </div>
@@ -62,20 +64,27 @@ export function LocationSection() {
           ))}
         </div>
 
-        {/* Image placeholder block */}
-        <motion.div
+        <motion.figure
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden bg-gradient-to-br from-zinc-200 via-zinc-100 to-stone-200 flex items-center justify-center border border-border"
+          className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden border border-border bg-muted shadow-sm"
         >
-          <div className="text-center">
-            <p className="text-6xl mb-4">🏴󠁧󠁢󠁳󠁣󠁴󠁿</p>
-            <p className="text-muted-foreground text-sm font-medium">Venue photo coming soon</p>
-            <p className="text-muted-foreground/60 text-xs mt-1">Scottish Highlands · May 2026</p>
+          <Image
+            src="/location-potential-example.png"
+            alt="Potential example of a private country estate—manor exterior, gardens, and interior living spaces suitable for a founder retreat."
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, min(1280px, 90vw)"
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent pt-24 pb-5 px-6 md:px-10 md:pb-6">
+            <figcaption className="text-left text-xs md:text-sm text-white/95 leading-relaxed max-w-3xl">
+              <span className="font-medium text-white">Potential example only.</span> Representative of the kind of
+              exclusive-use estate we secure—your confirmed Highlands venue may differ.
+            </figcaption>
           </div>
-        </motion.div>
+        </motion.figure>
       </div>
     </section>
   )

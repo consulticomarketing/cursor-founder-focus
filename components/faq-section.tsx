@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqs = [
   {
-    question: "When is the first event?",
+    question: "When is the next event?",
     answer:
       "4–8 May 2026, Monday to Friday, in the Scottish Highlands. Pay a deposit to reserve your place, then complete onboarding - or join the email list for updates only.",
   },

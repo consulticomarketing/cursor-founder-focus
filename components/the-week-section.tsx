@@ -9,42 +9,42 @@ import { EVENT_DATES_LABEL } from "@/lib/site"
 const weekDays = [
   {
     day: "Monday",
-    focus: "Arrive & Orient",
+    focus: "Arrive, connect, exhale",
     description:
-      "Arrive at the house, settle in, and meet the cohort. Evening kick-off: align on goals for the week and set the tone for deep work.",
-    tags: ["Arrivals", "Team dinner", "Goal-setting"],
+      "You land, drop your bags, and meet the room—no agenda crush on day one. Expect real conversation over good food, easy networking, and space to unwind before the week picks up pace.",
+    tags: ["Arrivals", "Networking", "Food & leisure"],
     accent: "border-l-slate-400",
   },
   {
     day: "Tuesday",
-    focus: "Studio & long-form",
+    focus: "Create with the crew",
     description:
-      "Deep studio day for podcast episodes, interviews, and supporting video - crew, lighting, and audio dialled in for release-ready capture.",
-    tags: ["Podcast", "Interviews", "Studio capture"],
+      "Booked slots with the podcast and video team, fulfilment space to actually ship client work, and recording blocks that go from idea to usable assets. After hours: a mastermind session, plus optional one-to-one time with other founders—trade tactics, intros, and hard-won lessons in private.",
+    tags: ["Podcast & video", "Fulfilment", "Recording", "Evening mastermind", "Founder 1:1s (optional)"],
     accent: "border-l-blue-500",
   },
   {
     day: "Wednesday",
-    focus: "Podcast & Audio",
+    focus: "Same engine, a lighter evening",
     description:
-      "Record multiple podcast episodes - solo and with fellow founders as guests. Studio-quality audio, post-production handled for you.",
-    tags: ["Podcast recording", "Guest episodes", "Post-production"],
+      "Same rhythm as Tuesday: creation windows with crew, space to fulfil and record, and the evening mastermind. Instead of founder 1:1s, there’s an optional entertainment slot—so you can switch off together without losing the group energy.",
+    tags: ["Podcast & video", "Fulfilment", "Recording", "Evening mastermind", "Entertainment (optional)"],
     accent: "border-l-violet-500",
   },
   {
     day: "Thursday",
-    focus: "Social & Ad Creative",
+    focus: "The knowledge & growth day",
     description:
-      "Batch-create social content: reels, talking-head clips, carousels. Afternoon session for ad creative - video and static formats.",
-    tags: ["Reels", "Ad creative", "Social batch"],
+      "We tilt from production to leverage: an agency-growth mastermind, dedicated workspace blocks for fulfilment and sales, then an online-growth mastermind—how you win attention, pipeline, and compounding reach after you leave the house.",
+    tags: ["Agency growth", "Fulfilment & sales workspace", "Online growth mastermind"],
     accent: "border-l-amber-500",
   },
   {
     day: "Friday",
-    focus: "Review, sales & depart",
+    focus: "Close the loop, then go",
     description:
-      "Morning review of the week's output, then sales and pipeline work. Afternoon depart with a full content suite, a clearer pipeline, and a network of founders who get what you're building.",
-    tags: ["Content review", "Sales", "Depart"],
+      "Final activities to land the week—last conversations, loose ends tied, relationships that don’t end at checkout. You leave on your terms, with the work moved forward and a network that keeps working after the last handshake.",
+    tags: ["Final sessions", "Networking", "Departures"],
     accent: "border-l-emerald-500",
   },
 ]
@@ -63,7 +63,7 @@ export function TheWeekSection() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Day by day</p>
           <h2 className="text-4xl md:text-5xl font-normal mb-6 text-balance font-serif">What happens during the week</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Four nights, Monday to Friday. {EVENT_DATES_LABEL}.
+            Four nights, Monday through Friday—land softly, stack output mid-week, then double down on how the business scales. {EVENT_DATES_LABEL}.
           </p>
         </motion.div>
 

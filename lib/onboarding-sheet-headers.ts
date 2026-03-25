@@ -1,0 +1,30 @@
+import { RETREAT_ADD_ONS } from "./add-ons"
+
+/** Headers in column order — row 1 of the Onboarding tab (must match append row in google-sheets-onboarding). */
+export const ONBOARDING_SHEET_HEADERS = [
+  "submitted_at",
+  "stripe_session_id",
+  "stripe_checkout_email",
+  "full_name",
+  "email",
+  "business_name",
+  "website",
+  "linkedin",
+  "instagram_handle",
+  "been_on_podcast",
+  "what_business_does",
+  "ideal_client",
+  "primary_offer",
+  "monthly_revenue",
+  "main_goal",
+  "main_goal_other",
+  "post_frequency",
+  "ran_paid_ads",
+  "has_landing_page",
+  "has_offer_page",
+  "has_crm",
+  ...RETREAT_ADD_ONS.map((a) => `add_on_interest_${a.id}`),
+  "dietary_requirements",
+  "room_preferences",
+  "consent_filming_marketing",
+] as const

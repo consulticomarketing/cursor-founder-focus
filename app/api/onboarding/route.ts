@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
+import {
+  appendOnboardingToGoogleSheet,
+  isOnboardingSheetsConfigured,
+} from "@/lib/google-sheets-onboarding"
 import { getStripe } from "@/lib/stripe"
 import type { OnboardingPayload } from "@/lib/onboarding-types"
 import { validateFullOnboarding } from "@/lib/onboarding-validate"
@@ -64,6 +68,13 @@ export async function POST(req: NextRequest) {
     }
 
     console.log("[Onboarding submitted]", JSON.stringify(exportReady, null, 2))
+
+    if (isOnboardingSheetsConfigured()) {
+      const sheet = await appendOnboardingToGoogleSheet(exportReady)
+      if (!sheet.ok) {
+        console.error("[onboarding] Google Sheet append failed:", sheet.error)
+      }
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {

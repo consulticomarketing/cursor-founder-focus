@@ -34,6 +34,10 @@ yarn-error.log*
 .env*
 !.env.example
 
+# Google Sheets service account key (local path from GOOGLE_APPLICATION_CREDENTIALS)
+google-sheets-service-account.json
+.local/
+
 # editor
 .cursor/
 

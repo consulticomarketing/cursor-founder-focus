@@ -1,34 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Video, Mic, LayoutGrid, UserRound } from "lucide-react"
+import { Video, Mic, LayoutGrid, UserRound, type LucideIcon } from "lucide-react"
+import { RETREAT_ADD_ONS } from "@/lib/add-ons"
 
-const addOns = [
-  {
-    icon: Video,
-    title: "VSL",
-    description:
-      "Script-to-screen video sales letter production - direction, recording, and edit to a standard that matches how you sell.",
-  },
-  {
-    icon: Mic,
-    title: "Production-grade podcast mentoring & storyboarding",
-    description:
-      "Hands-on help shaping episodes, narrative arcs, and episode plans so what you record in the week lands as a coherent show.",
-  },
-  {
-    icon: LayoutGrid,
-    title: "Content management & release",
-    description:
-      "Planning and coordination so episodes, clips, and assets don't stall after you leave - clear next steps for publish and distribution.",
-  },
-  {
-    icon: UserRound,
-    title: "Executive assistant for the week",
-    description:
-      "Dedicated support on-site - scheduling, follow-ups, and admin cleared so you stay in creator mode, not inbox mode.",
-  },
-]
+const ADD_ON_ICONS: Record<string, LucideIcon> = {
+  vsl: Video,
+  podcast_mentoring: Mic,
+  content_management: LayoutGrid,
+  executive_assistant: UserRound,
+}
 
 export function AddOnsSection() {
   return (
@@ -50,11 +31,11 @@ export function AddOnsSection() {
         </motion.div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {addOns.map((item, i) => {
-            const Icon = item.icon
+          {RETREAT_ADD_ONS.map((item, i) => {
+            const Icon = ADD_ON_ICONS[item.id] ?? Video
             return (
               <motion.div
-                key={item.title}
+                key={item.id}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: i * 0.06 }}

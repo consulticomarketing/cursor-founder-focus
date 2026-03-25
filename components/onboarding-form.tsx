@@ -1,16 +1,16 @@
 "use client"
 
-import { FormEvent, useState, useEffect, useMemo } from "react"
+import { FormEvent, useState, useEffect, useMemo, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Check } from "lucide-react"
+import { RETREAT_ADD_ONS, type RetreatAddOnId } from "@/lib/add-ons"
 import { EVENT_DATES_LABEL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 import {
   emptyOnboardingPayload,
   onboardingStorageKey,
-  CONTENT_PRIORITY_OPTIONS,
-  PUBLISH_CHANNEL_OPTIONS,
+  ONBOARDING_STORE_VERSION,
   type OnboardingPayload,
   type YesNo,
   type MonthlyRevenue,
@@ -19,20 +19,14 @@ import {
 } from "@/lib/onboarding-types"
 import { validateStep, validateFullOnboarding } from "@/lib/onboarding-validate"
 
-const TOTAL_STEPS = 10
+const TOTAL_STEPS = 4
 
 const MAX_BUSINESS_DOES = 300
 
 const STEP_META = [
-  { section: "Basic details", label: "Contact" },
-  { section: "Basic details", label: "Profiles" },
+  { section: "Basic details", label: "You & your profiles" },
   { section: "Business snapshot", label: "What you do" },
-  { section: "Business snapshot", label: "Revenue & goal" },
-  { section: "Content strategy", label: "Objections & buyers" },
-  { section: "Content strategy", label: "Angles & proof" },
-  { section: "Content strategy", label: "Priorities" },
-  { section: "Content output", label: "Formats & cadence" },
-  { section: "Ads & funnel", label: "Setup" },
+  { section: "Setup & extras", label: "Setup and extras" },
   { section: "Logistics", label: "Final" },
 ] as const
 
@@ -40,26 +34,58 @@ type FormState = "idle" | "loading" | "success" | "error"
 type SessionValidation = "idle" | "checking" | "valid" | "invalid"
 type SessionResponse = { ok: boolean; error?: string; email?: string | null }
 
-function mergeStoredPayload(stored: Partial<OnboardingPayload> | undefined): OnboardingPayload {
-  const e = emptyOnboardingPayload()
-  if (!stored) return e
-  return {
-    section1_basicDetails: { ...e.section1_basicDetails, ...stored.section1_basicDetails },
-    section2_businessSnapshot: { ...e.section2_businessSnapshot, ...stored.section2_businessSnapshot },
-    section3_contentStrategy: { ...e.section3_contentStrategy, ...stored.section3_contentStrategy },
-    section4_contentOutput: {
-      ...e.section4_contentOutput,
-      ...stored.section4_contentOutput,
-      contentPriorities: stored.section4_contentOutput?.contentPriorities ?? e.section4_contentOutput.contentPriorities,
-      publishChannels: stored.section4_contentOutput?.publishChannels ?? e.section4_contentOutput.publishChannels,
-    },
-    section5_adsFunnel: { ...e.section5_adsFunnel, ...stored.section5_adsFunnel },
-    section6_logistics: { ...e.section6_logistics, ...stored.section6_logistics },
-  }
+/** Older drafts used section5_adsFunnel without add-on interest. */
+type StoredDraft = Partial<OnboardingPayload> & {
+  section5_adsFunnel?: Partial<OnboardingPayload["section5_setupAndExtras"]>
 }
 
-function toggleId(list: string[], id: string) {
-  return list.includes(id) ? list.filter((x) => x !== id) : [...list, id]
+function migrateMonthlyRevenue(raw: string | undefined): MonthlyRevenue {
+  if (!raw) return ""
+  if (["5_10", "10_20", "20_35", "35_50", "50_plus"].includes(raw)) return raw as MonthlyRevenue
+  const legacy: Record<string, MonthlyRevenue> = {
+    "5k_10k": "5_10",
+    "10k_25k": "10_20",
+    "25k_plus": "35_50",
+  }
+  return legacy[raw] ?? ""
+}
+
+/** Maps saved step index when restoring drafts from before posting was merged into snapshot (v1 → v2). */
+function normalizeRestoredStep(rawStep: unknown, storeVersion: number | undefined): number {
+  if (typeof rawStep !== "number" || rawStep < 0) return 0
+  if (storeVersion === ONBOARDING_STORE_VERSION) return Math.min(rawStep, TOTAL_STEPS - 1)
+  if (rawStep <= 1) return rawStep
+  if (rawStep === 2) return 1
+  if (rawStep === 3) return 2
+  return 3
+}
+
+/** Merges saved draft; strips legacy sections and maps old revenue bands. */
+function mergeStoredPayload(stored: Partial<OnboardingPayload> | StoredDraft | undefined): OnboardingPayload {
+  const e = emptyOnboardingPayload()
+  if (!stored) return e
+  const s2 = stored.section2_businessSnapshot
+  const legacyAds = (stored as StoredDraft).section5_adsFunnel
+  const s5New = stored.section5_setupAndExtras
+  const s5Src = s5New ?? legacyAds
+  return {
+    section1_basicDetails: { ...e.section1_basicDetails, ...stored.section1_basicDetails },
+    section2_businessSnapshot: {
+      ...e.section2_businessSnapshot,
+      ...s2,
+      monthlyRevenue: migrateMonthlyRevenue(s2?.monthlyRevenue as string | undefined),
+    },
+    section4_contentOutput: { ...e.section4_contentOutput, ...stored.section4_contentOutput },
+    section5_setupAndExtras: {
+      ...e.section5_setupAndExtras,
+      ...(s5Src && typeof s5Src === "object" ? s5Src : {}),
+      addOnInterest: {
+        ...e.section5_setupAndExtras.addOnInterest,
+        ...(s5New?.addOnInterest ?? {}),
+      },
+    },
+    section6_logistics: { ...e.section6_logistics, ...stored.section6_logistics },
+  }
 }
 
 function YesNoRow({
@@ -122,6 +148,7 @@ export function OnboardingForm() {
   const [formState, setFormState] = useState<FormState>("idle")
   const [errorMessage, setErrorMessage] = useState("")
   const [fieldError, setFieldError] = useState("")
+  const skipScrollRef = useRef(true)
 
   useEffect(() => {
     if (!sessionId) {
@@ -162,11 +189,14 @@ export function OnboardingForm() {
     try {
       const raw = localStorage.getItem(onboardingStorageKey(sessionId))
       if (raw) {
-        const parsed = JSON.parse(raw) as { data?: Partial<OnboardingPayload>; step?: number }
-        if (parsed.data) setData(mergeStoredPayload(parsed.data))
-        if (typeof parsed.step === "number" && parsed.step >= 0 && parsed.step < TOTAL_STEPS) {
-          setStep(parsed.step)
+        const parsed = JSON.parse(raw) as {
+          v?: number
+          data?: Partial<OnboardingPayload>
+          step?: number
         }
+        if (parsed.data) setData(mergeStoredPayload(parsed.data))
+        const restored = normalizeRestoredStep(parsed.step, parsed.v)
+        if (restored >= 0 && restored < TOTAL_STEPS) setStep(restored)
       }
     } catch {
       /* ignore */
@@ -177,13 +207,11 @@ export function OnboardingForm() {
 
   useEffect(() => {
     if (validation !== "valid" || !customerEmail) return
-    setData((d) => {
-      if (d.section1_basicDetails.email.trim()) return d
-      return {
-        ...d,
-        section1_basicDetails: { ...d.section1_basicDetails, email: customerEmail },
-      }
-    })
+    setData((d) =>
+      d.section1_basicDetails.email.trim()
+        ? d
+        : { ...d, section1_basicDetails: { ...d.section1_basicDetails, email: customerEmail } }
+    )
   }, [validation, customerEmail])
 
   useEffect(() => {
@@ -191,7 +219,10 @@ export function OnboardingForm() {
     const key = onboardingStorageKey(sessionId)
     const t = window.setTimeout(() => {
       try {
-        localStorage.setItem(key, JSON.stringify({ data, step, savedAt: Date.now() }))
+        localStorage.setItem(
+          key,
+          JSON.stringify({ v: ONBOARDING_STORE_VERSION, data, step, savedAt: Date.now() })
+        )
       } catch {
         /* quota / private mode */
       }
@@ -204,6 +235,14 @@ export function OnboardingForm() {
     return () => window.clearTimeout(t)
   }, [data, step, sessionId, validation, hydrated])
 
+  useEffect(() => {
+    if (skipScrollRef.current) {
+      skipScrollRef.current = false
+      return
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+  }, [step])
+
   const progressPct = useMemo(() => Math.round(((step + 1) / TOTAL_STEPS) * 100), [step])
 
   function patchS1(up: Partial<OnboardingPayload["section1_basicDetails"]>) {
@@ -212,14 +251,24 @@ export function OnboardingForm() {
   function patchS2(up: Partial<OnboardingPayload["section2_businessSnapshot"]>) {
     setData((d) => ({ ...d, section2_businessSnapshot: { ...d.section2_businessSnapshot, ...up } }))
   }
-  function patchS3(up: Partial<OnboardingPayload["section3_contentStrategy"]>) {
-    setData((d) => ({ ...d, section3_contentStrategy: { ...d.section3_contentStrategy, ...up } }))
-  }
   function patchS4(up: Partial<OnboardingPayload["section4_contentOutput"]>) {
     setData((d) => ({ ...d, section4_contentOutput: { ...d.section4_contentOutput, ...up } }))
   }
-  function patchS5(up: Partial<OnboardingPayload["section5_adsFunnel"]>) {
-    setData((d) => ({ ...d, section5_adsFunnel: { ...d.section5_adsFunnel, ...up } }))
+  function patchS5(up: Partial<Omit<OnboardingPayload["section5_setupAndExtras"], "addOnInterest">>) {
+    setData((d) => ({
+      ...d,
+      section5_setupAndExtras: { ...d.section5_setupAndExtras, ...up },
+    }))
+  }
+
+  function patchAddOnInterest(id: RetreatAddOnId, v: YesNo) {
+    setData((d) => ({
+      ...d,
+      section5_setupAndExtras: {
+        ...d.section5_setupAndExtras,
+        addOnInterest: { ...d.section5_setupAndExtras.addOnInterest, [id]: v },
+      },
+    }))
   }
   function patchS6(up: Partial<OnboardingPayload["section6_logistics"]>) {
     setData((d) => ({ ...d, section6_logistics: { ...d.section6_logistics, ...up } }))
@@ -245,7 +294,7 @@ export function OnboardingForm() {
     if (!sessionId || validation !== "valid") return
 
     setFieldError("")
-    const stepV = validateStep(9, data)
+    const stepV = validateStep(3, data)
     if (!stepV.ok) {
       setFieldError(stepV.message)
       return
@@ -333,8 +382,8 @@ export function OnboardingForm() {
         </div>
         <h1 className="text-2xl font-serif font-normal mb-2">You&apos;re all set</h1>
         <p className="text-muted-foreground leading-relaxed mb-10">
-          Thanks for completing onboarding. We&apos;ll use your answers to shape podcast topics, content angles, and the
-          week ahead.
+          Thanks for completing onboarding. We&apos;ll follow up with full event logistics and a separate survey for
+          deeper content-planning questions.
         </p>
         <Link href="/" className="text-sm underline underline-offset-4 hover:text-foreground transition-colors">
           Back to the site
@@ -342,6 +391,31 @@ export function OnboardingForm() {
       </div>
     )
   }
+
+  const mainGoalOptions = (
+    [
+      { v: "clarify_offer" as const, t: "Clarify my offer / positioning" },
+      { v: "consistent_content" as const, t: "Build enough content to post consistently" },
+      { v: "authority" as const, t: "Grow authority in my niche" },
+      { v: "messaging" as const, t: "Develop better messaging / content angles" },
+      { v: "other" as const, t: "Other" },
+    ] satisfies { v: MainRetreatGoal; t: string }[]
+  ).map((opt) => (
+    <label
+      key={opt.v}
+      className="flex items-start gap-3 cursor-pointer rounded-xl border border-border bg-card px-4 py-3 has-[:checked]:border-foreground/30"
+    >
+      <input
+        type="radio"
+        name="mainGoal"
+        className="mt-1"
+        checked={data.section2_businessSnapshot.mainGoal === opt.v}
+        onChange={() => patchS2({ mainGoal: opt.v })}
+        disabled={busy}
+      />
+      <span className="text-sm leading-snug">{opt.t}</span>
+    </label>
+  ))
 
   return (
     <div className="max-w-xl mx-auto px-5 sm:px-6 py-10 md:py-16 pb-24">
@@ -367,15 +441,17 @@ export function OnboardingForm() {
           Payment confirmed for <span className="text-foreground font-medium">{customerEmail}</span>
         </p>
       )}
-      {step === 0 && !customerEmail && <p className="text-sm text-muted-foreground mb-6 leading-relaxed">Retreat week: {EVENT_DATES_LABEL}</p>}
+      {step === 0 && !customerEmail && (
+        <p className="text-sm text-muted-foreground mb-6 leading-relaxed">Retreat week: {EVENT_DATES_LABEL}</p>
+      )}
       {step === 0 && (
         <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
-          Built for agency owners and founders doing roughly £5k–£25k+ / month. We focus on positioning, offer clarity, and
-          content that handles objections and drives inbound — tell us what we need to produce with you.
+          Built for agency owners and founders. We’ll use this to prepare the retreat; a follow-up survey will cover
+          detailed content and positioning questions.
         </p>
       )}
 
-      {step === 9 && (
+      {step === 3 && (
         <p className="text-sm text-muted-foreground mb-6 leading-relaxed border-l-2 border-foreground/20 pl-4">
           Arrival details and full event logistics will be sent via email separately.
         </p>
@@ -412,6 +488,7 @@ export function OnboardingForm() {
                 disabled={busy}
                 className={inputClass(busy)}
                 autoComplete="email"
+                placeholder={customerEmail ?? undefined}
               />
             </div>
             <div>
@@ -441,11 +518,6 @@ export function OnboardingForm() {
                 placeholder="https://"
               />
             </div>
-          </div>
-        )}
-
-        {step === 1 && (
-          <div className="space-y-5">
             <div>
               <label htmlFor="linkedIn" className="block text-sm font-medium mb-2">
                 LinkedIn profile <span className="text-red-500">*</span>
@@ -463,15 +535,16 @@ export function OnboardingForm() {
             </div>
             <div>
               <label htmlFor="instagram" className="block text-sm font-medium mb-2">
-                Instagram handle <span className="text-red-500">*</span>
+                Business Instagram handle <span className="text-red-500">*</span>
               </label>
+              <p className="text-xs text-muted-foreground mb-2">The account you use for your business, not personal.</p>
               <input
                 id="instagram"
                 value={data.section1_basicDetails.instagramHandle}
                 onChange={(e) => patchS1({ instagramHandle: e.target.value })}
                 disabled={busy}
                 className={inputClass(busy)}
-                placeholder="@yourhandle"
+                placeholder="@yourbusiness"
               />
             </div>
             <YesNoRow
@@ -483,7 +556,7 @@ export function OnboardingForm() {
           </div>
         )}
 
-        {step === 2 && (
+        {step === 1 && (
           <div className="space-y-5">
             <div>
               <label htmlFor="what" className="block text-sm font-medium mb-2">
@@ -529,11 +602,6 @@ export function OnboardingForm() {
                 className={cn(inputClass(busy), "min-h-[88px] resize-y")}
               />
             </div>
-          </div>
-        )}
-
-        {step === 3 && (
-          <div className="space-y-5">
             <div>
               <label htmlFor="revenue" className="block text-sm font-medium mb-2">
                 Average monthly revenue <span className="text-red-500">*</span>
@@ -546,41 +614,18 @@ export function OnboardingForm() {
                 className={inputClass(busy)}
               >
                 <option value="">Select range</option>
-                <option value="5k_10k">£5k–£10k</option>
-                <option value="10k_25k">£10k–£25k</option>
-                <option value="25k_plus">£25k+</option>
+                <option value="5_10">£5k–£10k</option>
+                <option value="10_20">£10k–£20k</option>
+                <option value="20_35">£20k–£35k</option>
+                <option value="35_50">£35k–£50k</option>
+                <option value="50_plus">£50k+</option>
               </select>
             </div>
             <div className="space-y-3">
               <p className="text-sm font-medium">
                 What is your main goal for this retreat? <span className="text-red-500">*</span>
               </p>
-              <div className="space-y-2">
-                {(
-                  [
-                    { v: "clarify_offer" as const, t: "Clarify my offer / positioning" },
-                    { v: "consistent_content" as const, t: "Build enough content to post consistently" },
-                    { v: "authority" as const, t: "Grow authority in my niche" },
-                    { v: "messaging" as const, t: "Develop better messaging / content angles" },
-                    { v: "other" as const, t: "Other" },
-                  ] satisfies { v: MainRetreatGoal; t: string }[]
-                ).map((opt) => (
-                  <label
-                    key={opt.v}
-                    className="flex items-start gap-3 cursor-pointer rounded-xl border border-border bg-card px-4 py-3 has-[:checked]:border-foreground/30"
-                  >
-                    <input
-                      type="radio"
-                      name="mainGoal"
-                      className="mt-1"
-                      checked={data.section2_businessSnapshot.mainGoal === opt.v}
-                      onChange={() => patchS2({ mainGoal: opt.v })}
-                      disabled={busy}
-                    />
-                    <span className="text-sm leading-snug">{opt.t}</span>
-                  </label>
-                ))}
-              </div>
+              <div className="space-y-2">{mainGoalOptions}</div>
               {data.section2_businessSnapshot.mainGoal === "other" && (
                 <input
                   value={data.section2_businessSnapshot.mainGoalOther}
@@ -591,187 +636,13 @@ export function OnboardingForm() {
                 />
               )}
             </div>
-          </div>
-        )}
-
-        {step === 4 && (
-          <div className="space-y-5">
-            {[
-              {
-                k: "salesObjections" as const,
-                label: "What are the most common objections you hear on sales calls?",
-              },
-              { k: "repeatedQuestions" as const, label: "What questions do potential clients repeatedly ask before buying?" },
-              { k: "misunderstandings" as const, label: "What do people misunderstand about your service or industry?" },
-              { k: "knowBeforeBuy" as const, label: "What should people know before working with you that would make them more likely to buy?" },
-            ].map((f) => (
-              <div key={f.k}>
-                <label className="block text-sm font-medium mb-2">
-                  {f.label} <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  rows={5}
-                  value={data.section3_contentStrategy[f.k]}
-                  onChange={(e) => patchS3({ [f.k]: e.target.value })}
-                  disabled={busy}
-                  className={cn(inputClass(busy), "min-h-[120px] resize-y")}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {step === 5 && (
-          <div className="space-y-5">
-            {[
-              { k: "differentiator" as const, label: "What makes your approach different or better than competitors?" },
-              { k: "resultsConfident" as const, label: "What results have you delivered that you’re most confident talking about?" },
-              { k: "topics30to60" as const, label: "What topics could you speak about confidently for 30–60 minutes?" },
-            ].map((f) => (
-              <div key={f.k}>
-                <label className="block text-sm font-medium mb-2">
-                  {f.label} <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  rows={5}
-                  value={data.section3_contentStrategy[f.k]}
-                  onChange={(e) => patchS3({ [f.k]: e.target.value })}
-                  disabled={busy}
-                  className={cn(inputClass(busy), "min-h-[120px] resize-y")}
-                />
-              </div>
-            ))}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Are there specific stories, experiences, or case studies you want to share?{" "}
-                <span className="text-muted-foreground font-normal">(optional)</span>
-              </label>
-              <textarea
-                rows={4}
-                value={data.section3_contentStrategy.storiesCaseStudies}
-                onChange={(e) => patchS3({ storiesCaseStudies: e.target.value })}
-                disabled={busy}
-                className={cn(inputClass(busy), "min-h-[100px] resize-y")}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Are there any strong opinions or contrarian takes you have in your space?{" "}
-                <span className="text-muted-foreground font-normal">(optional)</span>
-              </label>
-              <textarea
-                rows={4}
-                value={data.section3_contentStrategy.contrarianTakes}
-                onChange={(e) => patchS3({ contrarianTakes: e.target.value })}
-                disabled={busy}
-                className={cn(inputClass(busy), "min-h-[100px] resize-y")}
-              />
-            </div>
-          </div>
-        )}
-
-        {step === 6 && (
-          <div className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                If we could only create 3 pieces of content that would actually move your business forward, what would they
-                be? <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                rows={6}
-                value={data.section3_contentStrategy.threePriorityPieces}
-                onChange={(e) => patchS3({ threePriorityPieces: e.target.value })}
-                disabled={busy}
-                className={cn(inputClass(busy), "min-h-[140px] resize-y")}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Are there any topics you want to avoid? <span className="text-muted-foreground font-normal">(optional)</span>
-              </label>
-              <textarea
-                rows={4}
-                value={data.section3_contentStrategy.topicsToAvoid}
-                onChange={(e) => patchS3({ topicsToAvoid: e.target.value })}
-                disabled={busy}
-                className={cn(inputClass(busy), "min-h-[100px] resize-y")}
-              />
-            </div>
-          </div>
-        )}
-
-        {step === 7 && (
-          <div className="space-y-7">
-            <div>
-              <p className="text-sm font-medium mb-3">
-                What type of content do you want to prioritise? <span className="text-red-500">*</span>
-              </p>
-              <div className="space-y-2">
-                {CONTENT_PRIORITY_OPTIONS.map((o) => (
-                  <label
-                    key={o.id}
-                    className="flex items-start gap-3 cursor-pointer rounded-xl border border-border bg-card px-4 py-3 has-[:checked]:border-foreground/30"
-                  >
-                    <input
-                      type="checkbox"
-                      className="mt-1 rounded border-border"
-                      checked={data.section4_contentOutput.contentPriorities.includes(o.id)}
-                      onChange={() =>
-                        patchS4({ contentPriorities: toggleId(data.section4_contentOutput.contentPriorities, o.id) })
-                      }
-                      disabled={busy}
-                    />
-                    <span className="text-sm">{o.label}</span>
-                  </label>
-                ))}
-              </div>
-              {data.section4_contentOutput.contentPriorities.includes("other") && (
-                <input
-                  value={data.section4_contentOutput.contentPrioritiesOther}
-                  onChange={(e) => patchS4({ contentPrioritiesOther: e.target.value })}
-                  disabled={busy}
-                  className={cn(inputClass(busy), "mt-3")}
-                  placeholder="Describe other priorities"
-                />
-              )}
-            </div>
-            <div>
-              <p className="text-sm font-medium mb-3">
-                Where do you primarily want to publish content? <span className="text-red-500">*</span>
-              </p>
-              <div className="space-y-2">
-                {PUBLISH_CHANNEL_OPTIONS.map((o) => (
-                  <label
-                    key={o.id}
-                    className="flex items-start gap-3 cursor-pointer rounded-xl border border-border bg-card px-4 py-3 has-[:checked]:border-foreground/30"
-                  >
-                    <input
-                      type="checkbox"
-                      className="mt-1 rounded border-border"
-                      checked={data.section4_contentOutput.publishChannels.includes(o.id)}
-                      onChange={() =>
-                        patchS4({ publishChannels: toggleId(data.section4_contentOutput.publishChannels, o.id) })
-                      }
-                      disabled={busy}
-                    />
-                    <span className="text-sm">{o.label}</span>
-                  </label>
-                ))}
-              </div>
-              {data.section4_contentOutput.publishChannels.includes("other") && (
-                <input
-                  value={data.section4_contentOutput.publishChannelsOther}
-                  onChange={(e) => patchS4({ publishChannelsOther: e.target.value })}
-                  disabled={busy}
-                  className={cn(inputClass(busy), "mt-3")}
-                  placeholder="Other channels"
-                />
-              )}
-            </div>
-            <div>
+            <div className="pt-2 border-t border-border">
               <label htmlFor="freq" className="block text-sm font-medium mb-2">
                 How often do you currently post content? <span className="text-red-500">*</span>
               </label>
+              <p className="text-xs text-muted-foreground mb-3">
+                Content-type and channel priorities will be covered in your follow-up survey.
+              </p>
               <select
                 id="freq"
                 value={data.section4_contentOutput.postFrequency}
@@ -789,21 +660,55 @@ export function OnboardingForm() {
           </div>
         )}
 
-        {step === 8 && (
+        {step === 2 && (
           <div className="space-y-6">
-            <YesNoRow label="Have you run paid ads before?" value={data.section5_adsFunnel.ranPaidAds} onChange={(v) => patchS5({ ranPaidAds: v })} disabled={busy} />
-            <YesNoRow label="Do you currently have a landing page?" value={data.section5_adsFunnel.hasLandingPage} onChange={(v) => patchS5({ hasLandingPage: v })} disabled={busy} />
-            <YesNoRow label="Do you currently have a clear offer page?" value={data.section5_adsFunnel.hasOfferPage} onChange={(v) => patchS5({ hasOfferPage: v })} disabled={busy} />
+            <YesNoRow
+              label="Have you run paid ads before?"
+              value={data.section5_setupAndExtras.ranPaidAds}
+              onChange={(v) => patchS5({ ranPaidAds: v })}
+              disabled={busy}
+            />
+            <YesNoRow
+              label="Do you currently have a landing page?"
+              value={data.section5_setupAndExtras.hasLandingPage}
+              onChange={(v) => patchS5({ hasLandingPage: v })}
+              disabled={busy}
+            />
+            <YesNoRow
+              label="Do you currently have a clear offer page?"
+              value={data.section5_setupAndExtras.hasOfferPage}
+              onChange={(v) => patchS5({ hasOfferPage: v })}
+              disabled={busy}
+            />
             <YesNoRow
               label="Do you currently have a CRM or lead tracking system?"
-              value={data.section5_adsFunnel.hasCrm}
+              value={data.section5_setupAndExtras.hasCrm}
               onChange={(v) => patchS5({ hasCrm: v })}
               disabled={busy}
             />
+
+            <div className="pt-6 mt-2 border-t border-border space-y-6">
+              <div>
+                <p className="text-sm font-medium text-foreground">Optional extras</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  These match the add-ons on our homepage. Tell us if you&apos;d like to hear more — we&apos;ll follow up
+                  with availability and pricing (no obligation).
+                </p>
+              </div>
+              {RETREAT_ADD_ONS.map((addOn) => (
+                <YesNoRow
+                  key={addOn.id}
+                  label={`Would you like to hear more about: ${addOn.title}?`}
+                  value={data.section5_setupAndExtras.addOnInterest[addOn.id]}
+                  onChange={(v) => patchAddOnInterest(addOn.id, v)}
+                  disabled={busy}
+                />
+              ))}
+            </div>
           </div>
         )}
 
-        {step === 9 && (
+        {step === 3 && (
           <div className="space-y-5">
             <div>
               <label htmlFor="diet" className="block text-sm font-medium mb-2">
