@@ -1,13 +1,22 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getStripe } from "@/lib/stripe"
+import { getStripe, getStripeDepositPriceId } from "@/lib/stripe"
 
 export async function POST(req: NextRequest) {
   const stripe = getStripe()
-  const priceId = process.env.STRIPE_DEPOSIT_PRICE_ID
+  const priceId = getStripeDepositPriceId()
 
   if (!stripe || !priceId) {
+    const isDev = process.env.NODE_ENV === "development"
     return NextResponse.json(
-      { error: "Payments are not configured. Add STRIPE_SECRET_KEY and STRIPE_DEPOSIT_PRICE_ID." },
+      {
+        error: "Payments are not configured. Add STRIPE_SECRET_KEY and STRIPE_DEPOSIT_PRICE_ID to .env.local and restart the dev server.",
+        ...(isDev && {
+          debug: {
+            hasSecretKey: Boolean(stripe),
+            hasPriceId: Boolean(priceId),
+          },
+        }),
+      },
       { status: 503 }
     )
   }
