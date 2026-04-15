@@ -16,7 +16,7 @@ export function CTASection() {
             Ready to make content your competitive edge?
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto mb-10">
-            Deposits are open for 4–8 May 2026. Reserve with a deposit or sign up for email updates only - spots stay
+            Deposits are open for 15–19 June 2026. Reserve with a deposit or sign up for email updates only - spots stay
             limited to keep the cohort small and the output high.
           </p>
 

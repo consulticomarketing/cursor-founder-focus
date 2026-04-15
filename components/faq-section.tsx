@@ -4,7 +4,7 @@ const faqs: { question: string; paragraphs: string[] }[] = [
   {
     question: "When is the next event?",
     paragraphs: [
-      "4–8 May 2026, Monday to Friday, in the Scottish Highlands. Pay a deposit to reserve your place, then complete onboarding, or join the email list for updates only.",
+      "15–19 June 2026, Monday to Friday, in the Scottish Highlands. Pay a deposit to reserve your place, then complete onboarding, or join the email list for updates only.",
     ],
   },
   {
